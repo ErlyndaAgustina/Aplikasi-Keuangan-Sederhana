@@ -4,24 +4,24 @@ Aplikasi ini adalah sebuah program berbasis terminal (command-line interface) ya
 ## 📦 Struktur & Fitur
 1.Tambah Transaksi:
 Pada fitur ini para pengguna dapat menambahkan catatan keuangan berupa:
-1. Tipe transaksi:
-     a. Pemasukan 💰
-     b. Pengeluaran💸
-3. Input jumlah uang
-4. Deskripsi (opsional)
-5. Tanggal dan waktu akan dicatat secara otomatis saat pengguna menginput nominal
-6. Transaksi yang dimasukkan langsung memengaruhi saldo total sesuai jenisnya.
+a.. Tipe transaksi:
+     i. Pemasukan 💰
+     ii. Pengeluaran💸
+b. Input jumlah uang
+c. Deskripsi (opsional)
+d. Tanggal dan waktu akan dicatat secara otomatis saat pengguna menginput nominal
+e. Transaksi yang dimasukkan langsung memengaruhi saldo total sesuai jenisnya.
 
 2. Riwayat Transaksi:
 Fitur ini memberikan tampilan informasi mengenai riwayat transaksi, seperti transaksi pemasukan atau pengeluaran keuangan
    
-3.✏️ Edit Transaksi
+3.Edit Transaksi
 Fitur ini memungkinkan pengguna:
 1. Memilih transaksi yang ingin diedit dari daftar
 2. Mengganti jumlah dan deskripsi
 3. Saldo akan diperbarui berdasarkan nilai yang baru
 
-4. 🗑️ Hapus Satu atau Beberapa Transaksi
+4. Hapus Satu atau Beberapa Transaksi
 Terdapat dua cara untuk menghapus data:
 1. Satu transaksi: pengguna memilih berdasarkan transaksi yang ingin dihapus
 2. Multiple transaksi: input beberapa nomor transaksi yang dipisahkan koma
