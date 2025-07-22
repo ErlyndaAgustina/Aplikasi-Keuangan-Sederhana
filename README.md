@@ -2,6 +2,8 @@
 
 Aplikasi terminal untuk mencatat pemasukan dan pengeluaran menggunakan bahasa Dart.
 
+## Struktur
+
 ## 📦 Fitur
 - Tambah transaksi
 - Edit transaksi
@@ -9,6 +11,7 @@ Aplikasi terminal untuk mencatat pemasukan dan pengeluaran menggunakan bahasa Da
 - Lihat ringkasan saldo
 - Filter transaksi hari ini
 - Tampilan terminal berwarna 🌈
+- Keluar
 
 ## ▶️ Cara Menjalankan
 
