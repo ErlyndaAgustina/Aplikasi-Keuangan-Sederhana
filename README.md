@@ -17,29 +17,28 @@ Fitur ini memberikan tampilan informasi mengenai riwayat transaksi, seperti tran
    
 3.Edit Transaksi
 Fitur ini memungkinkan pengguna:
-1. Memilih transaksi yang ingin diedit dari daftar
-2. Mengganti jumlah dan deskripsi
-3. Saldo akan diperbarui berdasarkan nilai yang baru
+a. Memilih transaksi yang ingin diedit dari daftar
+b. Mengganti jumlah dan deskripsi
+c. Saldo akan diperbarui berdasarkan nilai yang baru
 
 4. Hapus Satu atau Beberapa Transaksi
 Terdapat dua cara untuk menghapus data:
-1. Satu transaksi: pengguna memilih berdasarkan transaksi yang ingin dihapus
-2. Multiple transaksi: input beberapa nomor transaksi yang dipisahkan koma
-   namun, dalam versi terakhir, penghapusan hanya bersifat visual dari daftar transaksi. Saldo tetap ada walaupun data transaksi dihapus.
+a. Satu transaksi: pengguna memilih berdasarkan transaksi yang ingin dihapus
+b. Multiple transaksi: input beberapa nomor transaksi yang dipisahkan koma, namun penghapusan hanya bersifat visual dari daftar transaksi. Saldo tetap ada walaupun data transaksi dihapus.
 
-5.💰 Ringkasan Saldo
+5.Ringkasan Saldo
 Menampilkan informasi:
-1. Total pemasukan dan pengeluaran keuangan
-2. Saldo akhir (pemasukan - pengeluaran)
-3. Angka ditampilkan dengan format mata uang Rupiah, dan warna hijau/merah tergantung nilainya positif/negatif.
+a. Total pemasukan dan pengeluaran keuangan
+b. Saldo akhir (pemasukan - pengeluaran)
+c. Angka ditampilkan dengan format mata uang Rupiah, dan warna hijau/merah tergantung nilainya positif/negatif.
 
-6. 📆 Filter Transaksi Hari Ini
+6. Filter Transaksi Hari Ini
 Fitur ini menyaring dan menampilkan hanya transaksi yang dibuat pada hari yang sama atau transaksi terakhir kali saat aplikasi dijalankan. Fitur ini dapat berguna untuk melihat aktivitas keuangan terbaru tanpa perlu menelusuri seluruh riwayat.
 
-7. 🚪 Keluar
+7. Keluar
 Menutup aplikasi secara bersih setelah pengguna memilih menu "0".
 
-8. 🌈 Tampilan Terminal Berwarna
+8. Tampilan Terminal Berwarna
 Untuk meningkatkan pengalaman pengguna, teks ditampilkan dengan kode warna ANSI:
 1. Hijau: pemasukan atau status sukses
 2. Merah: pengeluaran atau kesalahan
