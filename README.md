@@ -13,7 +13,7 @@ Pada fitur ini para pengguna dapat menambahkan catatan keuangan berupa:
 6. Transaksi yang dimasukkan langsung memengaruhi saldo total sesuai jenisnya.
 
 2. Riwayat Transaksi:
-Fitur ini memberikan tampilan informasi mengenai riwayat transaksi, seperti        transaksi pemasukan atau pengeluaran keuangan
+Fitur ini memberikan tampilan informasi mengenai riwayat transaksi, seperti transaksi pemasukan atau pengeluaran keuangan
    
 3.✏️ Edit Transaksi
 Fitur ini memungkinkan pengguna:
@@ -25,7 +25,7 @@ Fitur ini memungkinkan pengguna:
 Terdapat dua cara untuk menghapus data:
 1. Satu transaksi: pengguna memilih berdasarkan transaksi yang ingin dihapus
 2. Multiple transaksi: input beberapa nomor transaksi yang dipisahkan koma
-   namun, dalam versi terakhir, penghapusan hanya bersifat visual dari daftar         transaksi. Saldo tetap ada walaupun data transaksi dihapus.
+   namun, dalam versi terakhir, penghapusan hanya bersifat visual dari daftar transaksi. Saldo tetap ada walaupun data transaksi dihapus.
 
 5.💰 Ringkasan Saldo
 Menampilkan informasi:
@@ -51,7 +51,7 @@ Untuk meningkatkan pengalaman pengguna, teks ditampilkan dengan kode warna ANSI:
 Syarat:
 Sudah menginstal Dart SDK di komputer
 
-Langkah:
+Langkah-Langkah untuk Menggunakan:
 1. Buka terminal atau command prompt
 2. Masuk ke folder proyek
 3. Jalankan perintah berikut:
