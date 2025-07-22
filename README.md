@@ -1,14 +1,16 @@
 # 💸 Aplikasi Keuangan Sederhana
-Aplikasi ini adalah program berbasis terminal (command-line interface) yang dibuat menggunakan bahasa Dart, bertujuan untuk membantu pengguna mencatat, mengelola, dan meninjau pemasukan dan pengeluaran harian secara sederhana. Antarmuka pengguna didesain dengan tampilan teks berwarna agar lebih menarik dan mudah dibaca.
+Aplikasi ini adalah sebuah program berbasis terminal (command-line interface) yang dibuat menggunakan bahasa Dart, bertujuan untuk membantu pengguna mencatat, mengelola, dan meninjau pemasukan dan pengeluaran keuangan harian secara sederhana. Antarmuka pengguna didesain dengan tampilan teks berwarna agar lebih menarik dan mudah dibaca.
 
 ## 📦 Struktur & Fitur
-- ✅ Tambah Transaksi
-Pengguna dapat menambahkan catatan keuangan berupa:
-1. Tipe transaksi: pemasukan 💰 atau pengeluaran 💸
-2. Jumlah uang
-3. Deskripsi (opsional)
-4. Tanggal dan waktu akan dicatat secara otomatis saat input
-5. Transaksi yang dimasukkan langsung memengaruhi saldo total sesuai jenisnya.
+1.Tambah Transaksi
+Pada fitur ini para pengguna dapat menambahkan catatan keuangan berupa:
+1. Tipe transaksi:
+     a. Pemasukan 💰
+     b. Pengeluaran💸
+3. Input jumlah uang
+4. Deskripsi (opsional)
+5. Tanggal dan waktu akan dicatat secara otomatis saat pengguna menginput nominal
+6. Transaksi yang dimasukkan langsung memengaruhi saldo total sesuai jenisnya.
 
 - ✏️ Edit Transaksi
 Fitur ini memungkinkan pengguna:
