@@ -141,11 +141,19 @@ void tampilkanTransaksi() {
               '   ${warnaPutih('Deskripsi:')} ${t.deskripsi ?? '-'}\n'
               '   ${warnaPutih('Tanggal  :')} ${formatTanggal(t.tanggal)} - ${formatWaktu(t.tanggal)}',
     );
+
     if (i < daftarTransaksi.length - 1) {
       print(warnaCyan('-' * 60));
     }
   }
+
+  print(warnaCyan('═' * 60));
+  print(
+    '${warnaPutih('Saldo Akhir      :')} ${saldoTotal.saldoAkhir >= 0 ? warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}') : warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}')}',
+  );
   print(warnaCyan('═' * 60 + '\n'));
+  print(warnaKuning('\nTekan Enter untuk melanjutkan...'));
+  stdin.readLineSync();
 }
 
 void editTransaksi() {
@@ -302,9 +310,13 @@ void filterHariIni() {
       nomor++;
     }
     print(warnaCyan('═' * 60));
-  }
+  print(
+    '${warnaPutih('Saldo Akhir      :')} ${saldoTotal.saldoAkhir >= 0 ? warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}') : warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}')}',
+  );
+  print(warnaCyan('═' * 60 + '\n'));
   print(warnaKuning('\nTekan Enter untuk melanjutkan...'));
   stdin.readLineSync();
+}
 }
 
 String formatTanggal(DateTime tanggal) =>
