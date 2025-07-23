@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 
 class Transaksi {
   String tipe;
@@ -7,6 +8,22 @@ class Transaksi {
   DateTime tanggal;
 
   Transaksi(this.tipe, this.jumlah, this.deskripsi, this.tanggal);
+
+  Map<String, dynamic> toJson() => {
+        'tipe': tipe,
+        'jumlah': jumlah,
+        'deskripsi': deskripsi,
+        'tanggal': tanggal.toIso8601String(),
+      };
+
+  factory Transaksi.fromJson(Map<String, dynamic> json) {
+    return Transaksi(
+      json['tipe'],
+      json['jumlah'],
+      json['deskripsi'],
+      DateTime.parse(json['tanggal']),
+    );
+  }
 }
 
 class Saldo {
@@ -32,6 +49,30 @@ class Saldo {
 
 List<Transaksi> daftarTransaksi = [];
 Saldo saldoTotal = Saldo(0, 0);
+final String filePathTransaksi = 'transaksi.json';
+
+void simpanData() {
+  final data = {
+    'transaksi': daftarTransaksi.map((t) => t.toJson()).toList(),
+    'saldo': saldoTotal.toJson(),
+  };
+  File(filePathTransaksi).writeAsStringSync(jsonEncode(data));
+}
+
+void muatData() {
+  try {
+    if (File(filePathTransaksi).existsSync()) {
+      final content = File(filePathTransaksi).readAsStringSync();
+      final data = jsonDecode(content);
+      daftarTransaksi = (data['transaksi'] as List)
+          .map((t) => Transaksi.fromJson(t))
+          .toList();
+      saldoTotal = Saldo.fromJson(data['saldo']);
+    }
+  } catch (e) {
+    print(warnaMerah('Error loading data: $e'));
+  }
+}
 
 String warnaHijau(String text) => '\x1B[32m$text\x1B[0m';
 String warnaAbuAbu(String text) => '\x1B[90m$text\x1B[0m';
@@ -75,6 +116,7 @@ void tambahTransaksi() {
   }
 
   daftarTransaksi.add(Transaksi(tipe, jumlah, deskripsi, DateTime.now()));
+  simpanData();
   print(warnaHijau('\n✅ Transaksi berhasil ditambahkan.\n'));
 }
 
@@ -127,7 +169,6 @@ void editTransaksi() {
   print(warnaKuning('\nTekan Enter untuk melanjutkan...'));
   stdin.readLineSync();
 
-  // Kurangi jumlah lama dari total
   if (transaksi.tipe == 'pemasukan') {
     saldoTotal.totalPemasukan -= transaksi.jumlah;
   } else {
@@ -141,7 +182,6 @@ void editTransaksi() {
   String? deskripsi = stdin.readLineSync();
   if (deskripsi?.trim().isEmpty ?? true) deskripsi = null;
 
-  // Tambah jumlah baru ke total
   if (transaksi.tipe == 'pemasukan') {
     saldoTotal.totalPemasukan += jumlah;
   } else {
@@ -150,10 +190,10 @@ void editTransaksi() {
 
   daftarTransaksi[index].jumlah = jumlah;
   daftarTransaksi[index].deskripsi = deskripsi;
+  simpanData();
 
   print(warnaHijau('\n✅ Transaksi berhasil diperbarui.\n'));
 }
-
 
 void hapusMultipleTransaksi() {
   tampilkanTransaksi();
@@ -161,7 +201,7 @@ void hapusMultipleTransaksi() {
 
   stdout.write(
     warnaPutih(
-      'Masukkan nomor transaksi yang ingin dihapus (pisahkan dengan koma jika ingin menghapus semua transaksi): ',
+      'Masukkan nomor transaksi yang ingin dihapus (pisahkan dengan koma): ',
     ),
   );
   String? input = stdin.readLineSync();
@@ -201,8 +241,15 @@ void hapusMultipleTransaksi() {
 
   indeks.sort((a, b) => b.compareTo(a));
   for (var i in indeks) {
+    var transaksi = daftarTransaksi[i];
+    if (transaksi.tipe == 'pemasukan') {
+      saldoTotal.totalPemasukan -= transaksi.jumlah;
+    } else {
+      saldoTotal.totalPengeluaran -= transaksi.jumlah;
+    }
     daftarTransaksi.removeAt(i);
   }
+  simpanData();
 
   print(warnaHijau('\n✅ ${indeks.length} transaksi berhasil dihapus.\n'));
 }
@@ -262,30 +309,43 @@ void filterHariIni() {
 
 String formatTanggal(DateTime tanggal) =>
     '${tanggal.day.toString().padLeft(2, '0')}-${tanggal.month.toString().padLeft(2, '0')}-${tanggal.year}';
+
 String formatWaktu(DateTime tanggal) =>
     '${tanggal.hour.toString().padLeft(2, '0')}:${tanggal.minute.toString().padLeft(2, '0')}';
 
 String formatRupiah(double nilai) {
-  return nilai.toStringAsFixed(0).replaceAllMapped(
-    RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-    (Match match) => '${match[1]}.',
-  );
+  final str = nilai.toStringAsFixed(0);
+  final buffer = StringBuffer();
+  int count = 0;
+
+  for (int i = str.length - 1; i >= 0; i--) {
+    buffer.write(str[i]);
+    count++;
+    if (count % 3 == 0 && i != 0) {
+      buffer.write('.');
+    }
+  }
+
+  return buffer.toString().split('').reversed.join();
 }
 
 void main() {
+  muatData();
+
   while (true) {
-    print(warnaCyan('\n📌 MENU UTAMA'));
+    print(warnaCyan('\n📊 MENU UTAMA'));
     print(warnaCyan('═' * 30));
     print(warnaPutih('1. Tambah Transaksi'));
-    print(warnaPutih('2. Riwayat Transaksi'));
+    print(warnaPutih('2. Lihat Transaksi'));
     print(warnaPutih('3. Edit Transaksi'));
-    print(warnaPutih('4. Hapus Beberapa Transaksi'));
-    print(warnaPutih('5. Saldo'));
-    print(warnaPutih('6. Transaksi Hari Ini'));
+    print(warnaPutih('4. Hapus Transaksi'));
+    print(warnaPutih('5. Filter Hari Ini'));
+    print(warnaPutih('6. Tampilkan Saldo'));
     print(warnaPutih('0. Keluar'));
 
     stdout.write(warnaPutih('\nPilih menu: '));
     String? pilihan = stdin.readLineSync();
+
     switch (pilihan) {
       case '1':
         tambahTransaksi();
@@ -300,19 +360,16 @@ void main() {
         hapusMultipleTransaksi();
         break;
       case '5':
-        tampilkanSaldo();
-        break;
-      case '6':
         filterHariIni();
         break;
+      case '6':
+        tampilkanSaldo();
+        break;
       case '0':
-        print(warnaHijau('\n👋 Terima kasih telah menggunakan aplikasi.\n'));
-        exit(0);
+        print(warnaCyan('👋 Terima kasih telah menggunakan aplikasi ini!'));
+        return;
       default:
-        print(warnaMerah('❌ Menu tidak valid.'));
+        print(warnaMerah('❌ Pilihan tidak valid.'));
     }
-
-    print(warnaAbuAbu('\nTekan Enter untuk kembali ke menu...'));
-    stdin.readLineSync();
   }
 }
