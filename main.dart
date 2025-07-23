@@ -10,11 +10,11 @@ class Transaksi {
   Transaksi(this.tipe, this.jumlah, this.deskripsi, this.tanggal);
 
   Map<String, dynamic> toJson() => {
-        'tipe': tipe,
-        'jumlah': jumlah,
-        'deskripsi': deskripsi,
-        'tanggal': tanggal.toIso8601String(),
-      };
+    'tipe': tipe,
+    'jumlah': jumlah,
+    'deskripsi': deskripsi,
+    'tanggal': tanggal.toIso8601String(),
+  };
 
   factory Transaksi.fromJson(Map<String, dynamic> json) {
     return Transaksi(
@@ -35,9 +35,9 @@ class Saldo {
   double get saldoAkhir => totalPemasukan - totalPengeluaran;
 
   Map<String, dynamic> toJson() => {
-        'totalPemasukan': totalPemasukan,
-        'totalPengeluaran': totalPengeluaran,
-      };
+    'totalPemasukan': totalPemasukan,
+    'totalPengeluaran': totalPengeluaran,
+  };
 
   factory Saldo.fromJson(Map<String, dynamic> json) {
     return Saldo(
@@ -275,7 +275,7 @@ void tampilkanSaldo() {
   print(
     '${warnaPutih('Saldo Akhir      :')} ${saldoTotal.saldoAkhir >= 0 ? warnaHijau('Rp${formatRupiah(saldoTotal.saldoAkhir)}') : warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}')}',
   );
-   print(warnaCyan('═' * 40 + '\n'));
+  print(warnaCyan('═' * 40 + '\n'));
   print(warnaKuning('\nTekan Enter untuk melanjutkan...'));
   stdin.readLineSync();
 }
@@ -313,13 +313,13 @@ void filterHariIni() {
       nomor++;
     }
     print(warnaCyan('═' * 60));
-  print(
-    '${warnaPutih('Saldo Akhir      :')} ${saldoTotal.saldoAkhir >= 0 ? warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}') : warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}')}',
-  );
-  print(warnaCyan('═' * 60 + '\n'));
-  print(warnaKuning('\nTekan Enter untuk melanjutkan...'));
-  stdin.readLineSync();
-}
+    print(
+      '${warnaPutih('Saldo Akhir      :')} ${saldoTotal.saldoAkhir >= 0 ? warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}') : warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}')}',
+    );
+    print(warnaCyan('═' * 60 + '\n'));
+    print(warnaKuning('\nTekan Enter untuk melanjutkan...'));
+    stdin.readLineSync();
+  }
 }
 
 String formatTanggal(DateTime tanggal) =>
