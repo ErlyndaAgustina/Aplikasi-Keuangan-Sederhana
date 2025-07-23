@@ -275,6 +275,9 @@ void tampilkanSaldo() {
   print(
     '${warnaPutih('Saldo Akhir      :')} ${saldoTotal.saldoAkhir >= 0 ? warnaHijau('Rp${formatRupiah(saldoTotal.saldoAkhir)}') : warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}')}',
   );
+   print(warnaCyan('═' * 40 + '\n'));
+  print(warnaKuning('\nTekan Enter untuk melanjutkan...'));
+  stdin.readLineSync();
 }
 
 void filterHariIni() {
