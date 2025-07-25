@@ -34,7 +34,7 @@ Aplikasi ini adalah sebuah program berbasis terminal (command-line interface) ya
    Menampilkan informasi:
    - Total pemasukan dan pengeluaran keuangan
    - Saldo akhir *(pemasukan - pengeluaran)*
-   - Angka ditampilkan dengan format mata uang Rupiah, dan warna hijau/merah tergantung nilainya positif/negatif
+   - Angka ditampilkan dengan format mata uang Rupiah, dan warna hijau/merah tergantung nilainya positif/negatif.
 
 6. **Filter Transaksi Hari Ini**  
    Fitur ini menyaring dan menampilkan hanya transaksi yang dibuat pada hari yang sama atau transaksi terakhir kali saat aplikasi dijalankan.  
