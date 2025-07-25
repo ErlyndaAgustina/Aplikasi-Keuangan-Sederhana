@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 
+//kelastransaksi
 class Transaksi {
   String tipe;
   double jumlah;
