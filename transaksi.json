@@ -1,1 +1,1 @@
-{"transaksi":[{"tipe":"pemasukan","jumlah":100000.0,"deskripsi":null,"tanggal":"2025-07-23T07:18:11.333342"},{"tipe":"pemasukan","jumlah":20.0,"deskripsi":null,"tanggal":"2025-07-23T10:22:55.881464"},{"tipe":"pemasukan","jumlah":0.0,"deskripsi":null,"tanggal":"2025-07-23T10:47:20.702880"}],"saldo":{"totalPemasukan":100020.0,"totalPengeluaran":0.0}}
+{"transaksi":[],"saldo":{"totalPemasukan":0.0,"totalPengeluaran":0.0}}
