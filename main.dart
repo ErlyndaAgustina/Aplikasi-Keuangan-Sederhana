@@ -1,16 +1,14 @@
-import 'dart:io';      
-import 'dart:convert'; 
+import 'dart:io';
+import 'dart:convert';
 
-// Kelas untuk menyimpan data transaksi keuangan
 class Transaksi {
-  String tipe;              
-  double jumlah;           
-  String? deskripsi;       
-  DateTime tanggal;         
+  String tipe;
+  double jumlah;
+  String? deskripsi;
+  DateTime tanggal;
 
   Transaksi(this.tipe, this.jumlah, this.deskripsi, this.tanggal);
 
-  // Mengubah objek Transaksi ke format JSON
   Map<String, dynamic> toJson() => {
     'tipe': tipe,
     'jumlah': jumlah,
@@ -18,7 +16,6 @@ class Transaksi {
     'tanggal': tanggal.toIso8601String(),
   };
 
-  // Membuat objek Transaksi dari data JSON
   factory Transaksi.fromJson(Map<String, dynamic> json) {
     return Transaksi(
       json['tipe'],
@@ -29,23 +26,19 @@ class Transaksi {
   }
 }
 
-// Kelas untuk menghitung dan menyimpan total saldo
 class Saldo {
-  double totalPemasukan;    
-  double totalPengeluaran;  
+  double totalPemasukan;
+  double totalPengeluaran;
 
   Saldo(this.totalPemasukan, this.totalPengeluaran);
 
-  // Getter untuk menghitung saldo akhir (pemasukan - pengeluaran)
   double get saldoAkhir => totalPemasukan - totalPengeluaran;
 
-  // Konversi ke JSON
   Map<String, dynamic> toJson() => {
     'totalPemasukan': totalPemasukan,
     'totalPengeluaran': totalPengeluaran,
   };
 
-  // Buat objek Saldo dari JSON
   factory Saldo.fromJson(Map<String, dynamic> json) {
     return Saldo(
       json['totalPemasukan'] ?? 0.0,
@@ -54,12 +47,10 @@ class Saldo {
   }
 }
 
-// Data global
-List<Transaksi> daftarTransaksi = [];      
-Saldo saldoTotal = Saldo(0, 0);           
-final String filePathTransaksi = 'transaksi.json'; // Lokasi penyimpanan file
+List<Transaksi> daftarTransaksi = [];
+Saldo saldoTotal = Saldo(0, 0);
+final String filePathTransaksi = 'transaksi.json';
 
-// Fungsi menyimpan data transaksi dan saldo ke file
 void simpanData() {
   final data = {
     'transaksi': daftarTransaksi.map((t) => t.toJson()).toList(),
@@ -68,7 +59,6 @@ void simpanData() {
   File(filePathTransaksi).writeAsStringSync(jsonEncode(data));
 }
 
-// Fungsi memuat data dari file transaksi.json ke dalam memori
 void muatData() {
   try {
     if (File(filePathTransaksi).existsSync()) {
@@ -84,7 +74,6 @@ void muatData() {
   }
 }
 
-// Fungsi pewarnaan teks (untuk tampilan terminal yang menarik)
 String warnaHijau(String text) => '\x1B[32m$text\x1B[0m';
 String warnaAbuAbu(String text) => '\x1B[90m$text\x1B[0m';
 String warnaMerah(String text) => '\x1B[31m$text\x1B[0m';
@@ -94,10 +83,9 @@ String warnaMagenta(String text) => '\x1B[35m$text\x1B[0m';
 String warnaCyan(String text) => '\x1B[36m$text\x1B[0m';
 String warnaPutih(String text) => '\x1B[37m$text\x1B[0m';
 
-// Fungsi untuk menambahkan transaksi baru
 void tambahTransaksi() {
   print(warnaCyan('\n📝 TAMBAH TRANSAKSI'));
-  // Pilih jenis transaksi
+  print(warnaCyan('═' * 40));
   print(warnaKuning('Pilih tipe transaksi:'));
   print(warnaHijau('1. Pemasukan 💰'));
   print(warnaMerah('2. Pengeluaran 💸'));
@@ -114,23 +102,19 @@ void tambahTransaksi() {
     return;
   }
 
-  // Input jumlah uang
   stdout.write(warnaPutih('Masukkan jumlah: Rp'));
   double jumlah = double.tryParse(stdin.readLineSync()!) ?? 0;
 
-  // Input deskripsi opsional
   stdout.write(warnaPutih('Masukkan deskripsi (opsional): '));
   String? deskripsi = stdin.readLineSync();
   if (deskripsi?.trim().isEmpty ?? true) deskripsi = null;
 
-  // Tambah ke saldo
   if (tipe == 'pemasukan') {
     saldoTotal.totalPemasukan += jumlah;
   } else {
     saldoTotal.totalPengeluaran += jumlah;
   }
 
-  // Tambahkan ke daftar
   daftarTransaksi.add(Transaksi(tipe, jumlah, deskripsi, DateTime.now()));
   simpanData();
   print(warnaHijau('\n✅ Transaksi berhasil ditambahkan.\n'));
@@ -139,7 +123,6 @@ void tambahTransaksi() {
   stdin.readLineSync();
 }
 
-// Menampilkan semua transaksi
 void tampilkanTransaksi() {
   if (daftarTransaksi.isEmpty) {
     print(warnaKuning('\n📭 Belum ada transaksi.\n'));
@@ -147,6 +130,7 @@ void tampilkanTransaksi() {
   }
 
   print(warnaCyan('\n📋 DAFTAR TRANSAKSI'));
+  print(warnaCyan('═' * 60));
   for (int i = 0; i < daftarTransaksi.length; i++) {
     var t = daftarTransaksi[i];
     String tipeBerwarna = t.tipe == 'pemasukan'
@@ -160,14 +144,21 @@ void tampilkanTransaksi() {
               '   ${warnaPutih('Deskripsi:')} ${t.deskripsi ?? '-'}\n'
               '   ${warnaPutih('Tanggal  :')} ${formatTanggal(t.tanggal)} - ${formatWaktu(t.tanggal)}',
     );
+
+    if (i < daftarTransaksi.length - 1) {
+      print(warnaCyan('-' * 60));
+    }
   }
 
-  // Menampilkan saldo akhir
   print(warnaCyan('═' * 60));
-  print('${warnaPutih('Saldo Akhir      :')} ${warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}')}');
+  print(
+    '${warnaPutih('Saldo Akhir      :')} ${saldoTotal.saldoAkhir >= 0 ? warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}') : warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}')}',
+  );
+  print(warnaCyan('═' * 60 + '\n'));
+  print(warnaKuning('\nTekan Enter untuk melanjutkan...'));
+  stdin.readLineSync();
 }
 
-// Fungsi untuk mengedit transaksi tertentu
 void editTransaksi() {
   tampilkanTransaksi();
   if (daftarTransaksi.isEmpty) return;
@@ -181,14 +172,20 @@ void editTransaksi() {
   }
 
   var transaksi = daftarTransaksi[index];
-  // Batalkan efek transaksi lama
+  print(warnaCyan('\n✏️ EDIT TRANSAKSI'));
+  print(warnaCyan('═' * 40));
+  print('${warnaPutih('Tipe     :')} ${transaksi.tipe}');
+  print('${warnaPutih('Jumlah   :')} Rp${formatRupiah(transaksi.jumlah)}');
+  print('${warnaPutih('Deskripsi:')} ${transaksi.deskripsi ?? "-"}');
+  print(warnaKuning('\nTekan Enter untuk melanjutkan...'));
+  stdin.readLineSync();
+
   if (transaksi.tipe == 'pemasukan') {
     saldoTotal.totalPemasukan -= transaksi.jumlah;
   } else {
     saldoTotal.totalPengeluaran -= transaksi.jumlah;
   }
 
-  // Input ulang
   stdout.write(warnaPutih('Masukkan jumlah baru: Rp'));
   double jumlah = double.tryParse(stdin.readLineSync()!) ?? 0;
 
@@ -196,27 +193,27 @@ void editTransaksi() {
   String? deskripsi = stdin.readLineSync();
   if (deskripsi?.trim().isEmpty ?? true) deskripsi = null;
 
-  // Update saldo baru
   if (transaksi.tipe == 'pemasukan') {
     saldoTotal.totalPemasukan += jumlah;
   } else {
     saldoTotal.totalPengeluaran += jumlah;
   }
 
-  // Simpan perubahan
   daftarTransaksi[index].jumlah = jumlah;
   daftarTransaksi[index].deskripsi = deskripsi;
   simpanData();
+
   print(warnaHijau('\n✅ Transaksi berhasil diperbarui.\n'));
 }
 
-// Fungsi menghapus banyak transaksi sekaligus
 void hapusMultipleTransaksi() {
   tampilkanTransaksi();
   if (daftarTransaksi.isEmpty) return;
 
   stdout.write(
-    warnaPutih('Masukkan nomor transaksi yang ingin dihapus (pisahkan dengan koma): '),
+    warnaPutih(
+      'Masukkan nomor transaksi yang ingin dihapus (pisahkan dengan koma): ',
+    ),
   );
   String? input = stdin.readLineSync();
   if (input == null || input.trim().isEmpty) {
@@ -224,7 +221,6 @@ void hapusMultipleTransaksi() {
     return;
   }
 
-  // Ambil indeks yang valid
   List<int> indeks = input
       .split(',')
       .map((e) => int.tryParse(e.trim()))
@@ -237,15 +233,23 @@ void hapusMultipleTransaksi() {
     return;
   }
 
-  // Konfirmasi
-  stdout.write(warnaKuning('\nYakin ingin menghapus semua transaksi ini? (y/n): '));
+  print(warnaMerah('\n⚠️ Konfirmasi Penghapusan'));
+  for (var i in indeks) {
+    var t = daftarTransaksi[i];
+    print(
+      '${warnaPutih('•')} ${t.tipe.toUpperCase()} - Rp${formatRupiah(t.jumlah)} - ${t.deskripsi ?? "-"}',
+    );
+  }
+
+  stdout.write(
+    warnaKuning('\nYakin ingin menghapus semua transaksi ini? (y/n): '),
+  );
   String? konfirmasi = stdin.readLineSync();
   if (konfirmasi?.toLowerCase() != 'y') {
     print(warnaMerah('\n❌ Penghapusan dibatalkan.\n'));
     return;
   }
 
-  // Hapus transaksi dimulai dari indeks terbesar agar tidak geser posisi
   indeks.sort((a, b) => b.compareTo(a));
   for (var i in indeks) {
     var transaksi = daftarTransaksi[i];
@@ -257,30 +261,42 @@ void hapusMultipleTransaksi() {
     daftarTransaksi.removeAt(i);
   }
   simpanData();
+
   print(warnaHijau('\n✅ ${indeks.length} transaksi berhasil dihapus.\n'));
 }
 
-// Menampilkan ringkasan total keuangan
 void tampilkanSaldo() {
   print(warnaCyan('\n💰 RINGKASAN KEUANGAN'));
-  print('${warnaPutih('Total Pemasukan  :')} ${warnaHijau('Rp${formatRupiah(saldoTotal.totalPemasukan)}')}');
-  print('${warnaPutih('Total Pengeluaran:')} ${warnaMerah('Rp${formatRupiah(saldoTotal.totalPengeluaran)}')}');
-  print('${warnaPutih('Saldo Akhir      :')} ${saldoTotal.saldoAkhir >= 0 ? warnaHijau('Rp${formatRupiah(saldoTotal.saldoAkhir)}') : warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}')}');
+  print(warnaCyan('═' * 40));
+  print(
+    '${warnaPutih('Total Pemasukan  :')} ${warnaHijau('Rp${formatRupiah(saldoTotal.totalPemasukan)}')}',
+  );
+  print(
+    '${warnaPutih('Total Pengeluaran:')} ${warnaMerah('Rp${formatRupiah(saldoTotal.totalPengeluaran)}')}',
+  );
+  print(warnaCyan('═' * 40));
+  print(
+    '${warnaPutih('Saldo Akhir      :')} ${saldoTotal.saldoAkhir >= 0 ? warnaHijau('Rp${formatRupiah(saldoTotal.saldoAkhir)}') : warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}')}',
+  );
+  print(warnaCyan('═' * 40 + '\n'));
+  print(warnaKuning('\nTekan Enter untuk melanjutkan...'));
+  stdin.readLineSync();
 }
 
-// Menampilkan transaksi yang terjadi hari ini
 void filterHariIni() {
   var now = DateTime.now();
   var hariIni = daftarTransaksi.where(
-    (t) => t.tanggal.year == now.year &&
-           t.tanggal.month == now.month &&
-           t.tanggal.day == now.day,
+    (t) =>
+        t.tanggal.year == now.year &&
+        t.tanggal.month == now.month &&
+        t.tanggal.day == now.day,
   );
 
   if (hariIni.isEmpty) {
     print(warnaKuning('\n📭 Tidak ada transaksi hari ini.'));
   } else {
     print(warnaCyan('\n📆 RIWAYAT TRANSAKSI TERAKHIR'));
+    print(warnaCyan('═' * 60));
     int nomor = 1;
     for (var t in hariIni) {
       String tipeBerwarna = t.tipe == 'pemasukan'
@@ -294,20 +310,27 @@ void filterHariIni() {
                 '   ${warnaPutih('Deskripsi:')} ${t.deskripsi ?? '-'}\n'
                 '   ${warnaPutih('Tanggal  :')} ${formatTanggal(t.tanggal)} - ${formatWaktu(t.tanggal)}',
       );
+      if (nomor < hariIni.length) {
+        print(warnaCyan('-' * 60));
+      }
       nomor++;
     }
+    print(warnaCyan('═' * 60));
+    print(
+      '${warnaPutih('Saldo Akhir      :')} ${saldoTotal.saldoAkhir >= 0 ? warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}') : warnaMerah('Rp${formatRupiah(saldoTotal.saldoAkhir)}')}',
+    );
+    print(warnaCyan('═' * 60 + '\n'));
+    print(warnaKuning('\nTekan Enter untuk melanjutkan...'));
+    stdin.readLineSync();
   }
 }
 
-// Format tanggal ke dd-mm-yyyy
 String formatTanggal(DateTime tanggal) =>
     '${tanggal.day.toString().padLeft(2, '0')}-${tanggal.month.toString().padLeft(2, '0')}-${tanggal.year}';
 
-// Format waktu ke hh:mm
 String formatWaktu(DateTime tanggal) =>
     '${tanggal.hour.toString().padLeft(2, '0')}:${tanggal.minute.toString().padLeft(2, '0')}';
 
-// Format nominal jadi format Rupiah dengan titik per 3 angka
 String formatRupiah(double nilai) {
   final str = nilai.toStringAsFixed(0);
   final buffer = StringBuffer();
@@ -324,12 +347,12 @@ String formatRupiah(double nilai) {
   return buffer.toString().split('').reversed.join();
 }
 
-// Fungsi utama yang menjalankan menu interaktif aplikasi
 void main() {
   muatData();
 
   while (true) {
     print(warnaCyan('\n📊 MENU UTAMA'));
+    print(warnaCyan('═' * 30));
     print(warnaPutih('1. Tambah Transaksi'));
     print(warnaPutih('2. Lihat Transaksi'));
     print(warnaPutih('3. Edit Transaksi'));
@@ -341,7 +364,6 @@ void main() {
     stdout.write(warnaPutih('\nPilih menu: '));
     String? pilihan = stdin.readLineSync();
 
-    // Switch case menu utama
     switch (pilihan) {
       case '1':
         tambahTransaksi();
