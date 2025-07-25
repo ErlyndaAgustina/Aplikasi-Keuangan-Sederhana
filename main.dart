@@ -134,6 +134,9 @@ void tambahTransaksi() {
   daftarTransaksi.add(Transaksi(tipe, jumlah, deskripsi, DateTime.now()));
   simpanData();
   print(warnaHijau('\n✅ Transaksi berhasil ditambahkan.\n'));
+   print(warnaCyan('═' * 40 + '\n'));
+  print(warnaKuning('\nTekan Enter untuk melanjutkan...'));
+  stdin.readLineSync();
 }
 
 // Menampilkan semua transaksi
