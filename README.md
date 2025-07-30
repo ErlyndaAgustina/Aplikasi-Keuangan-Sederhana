@@ -56,7 +56,7 @@ Aplikasi ini adalah sebuah program berbasis terminal (command-line interface) ya
 **Syarat:**  
 Sudah menginstal Dart SDK di komputer
 
-**Langkah-langkah Penggunaan Aplikasi:**
+**Langkah-langkah Penggunaan:**
 
 1. Buka terminal atau command prompt  
 2. Masuk ke folder proyek  
